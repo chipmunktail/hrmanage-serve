@@ -1,6 +1,6 @@
 var models = require('../db/models');
 const Sequelize = require('sequelize');
-const { json } = require('sequelize');
+const limitOffset = require('../utils/limitOffset')
 const Op = Sequelize.Op;
 
 // exports.getUsers = async (req, res, next) => {
@@ -64,6 +64,7 @@ const Op = Sequelize.Op;
 
 exports.getUsers = async (req) => {
     const { id, name } = req;
+    const { limit, offset } = limitOffset.getLimitOffset(req)
     let whereObj = {}
     let result
     if (id) whereObj.id = id
@@ -72,6 +73,8 @@ exports.getUsers = async (req) => {
     }
 
     result = await models.User.findAndCountAll({
+        limit,
+        offset,
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
     })

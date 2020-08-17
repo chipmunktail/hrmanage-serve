@@ -1,12 +1,12 @@
 const models = require('../db/models');
 const Sequelize = require('sequelize');
+const limitOffset = require('../utils/limitOffset')
 const Op = Sequelize.Op;
-const commonConfig = require('../config/common')
+
 
 exports.getDepartments = async (req) => {
     const { id, name } = req;
-    const limit = req.limit ? parseInt(req.limit) : commonConfig.defaultLimit
-    const offset = req.offset ? parseInt(req.offset) : 0
+    const { limit, offset } = limitOffset.getLimitOffset(req)
     let whereObj = {}
     let result
     if (id) whereObj.id = id
@@ -15,7 +15,8 @@ exports.getDepartments = async (req) => {
     }
 
     result = await models.Department.findAndCountAll({
-        limit: parseInt(limit), offset: parseInt(offset),
+        limit,
+        offset,
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
     })
@@ -87,8 +88,8 @@ exports.getUser = async (req) => {
     return { status: true, result }
 }
 
-exports.addUser = async (req) => {}
+exports.addUser = async (req) => { }
 
-exports.updateUser = async (req) => {}
+exports.updateUser = async (req) => { }
 
-exports.deleteUser = async(req) => {}
+exports.deleteUser = async (req) => { }
