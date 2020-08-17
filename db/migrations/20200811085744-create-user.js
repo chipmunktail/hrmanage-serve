@@ -26,6 +26,9 @@ module.exports = {
       freeHour: {
         type: Sequelize.INTEGER
       },
+      salaryId: {
+        type: Sequelize.INTEGER
+      },
       email: {
         type: Sequelize.STRING
       },

@@ -8,12 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      month: {
-        type: Sequelize.INTEGER
-      },
-      payDate: {
-        type: Sequelize.DATE
-      },
       salary: {
         type: Sequelize.FLOAT
       },

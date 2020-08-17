@@ -14,8 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Salary.init({
-    month: DataTypes.INTEGER,
-    payDate: DataTypes.DATE,
     salary: DataTypes.FLOAT,
     userId: DataTypes.INTEGER
   }, {

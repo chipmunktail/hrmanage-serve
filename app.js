@@ -9,6 +9,8 @@ var usersRouter = require('./routes/users');
 var rolesRouter = require('./routes/roles');
 var authsRouter = require('./routes/auths');
 var departmentRouter = require('./routes/departments');
+var jobRouter = require('./routes/jobs');
+var salaryRouter = requrie('./routes/salaies');
 
 var tokenService = require('./utils/token.service')
 
@@ -34,6 +36,8 @@ app.use('/user', usersRouter);
 app.use('/role', rolesRouter);
 app.use('/auth', authsRouter);
 app.use('/department', departmentRouter);
+app.use('/job', jobRouter);
+app.use('/salary', salaryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
