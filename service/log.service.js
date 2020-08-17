@@ -12,6 +12,15 @@ const operateType = {
     },
 }
 
+exports.getLogs = async (req) => {
+    const { limit, offset } = req
+    return await models.Log.findAndCountAll({
+        limit,
+        offset,
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+    })
+}
+
 exports.log = async (req) => {
     const { userName, roleName, userId, operateType, params } = req;
     await models.Log.create({
@@ -27,7 +36,7 @@ exports.middlewareLog = (req, res, next) => {
 
     }
     if (method === 'post') {
-        
+
     }
     const { userName, roleName, userId, operateType, params } = req;
     models.Log.create({

@@ -63,15 +63,17 @@ const Op = Sequelize.Op;
 exports.getRoles = async (req) => {
     const { id, name } = req;
     let whereObj = {}
+    let result
     if (id) whereObj.id = id
     if (name) whereObj.name = {
         [Op.like]: `%${name}%`,
     }
 
-    return models.Role.findAll({
+    result = await models.Role.findAndCountAll({
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
     })
+    return { status: true, result }
 }
 
 exports.createRole = async (req) => {

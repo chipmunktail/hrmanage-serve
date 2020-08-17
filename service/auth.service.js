@@ -65,6 +65,7 @@ const Op = Sequelize.Op;
 exports.getAuths = async (req) => {
     const { id, code, parentCode } = req;
     let whereObj = {}
+    let result
     if (id) whereObj.id = id
     if (code) whereObj.code = {
         [Op.like]: `%${code}%`,
@@ -73,10 +74,11 @@ exports.getAuths = async (req) => {
         [Op.like]: `%${parentCode}%`,
     }
 
-    return models.Auth.findAll({
+    result = await models.Auth.findAndCountAll({
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
     })
+    return { status: true, result }
 }
 
 exports.createAuth = async (req) => {

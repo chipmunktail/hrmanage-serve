@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const commonConfig = require('../config/common')
 const secret = 'secret'
 
 
@@ -31,19 +32,16 @@ exports.isExpiration = async (req, res, next) => {
     // exp (expiration time)：过期时间
     // iat (Issued At)：签发时间
     // 保护路由
-    isNotAuthRoute = ['/login'].indexOf(req.path) > -1
+    isNotAuthRoute = commonConfig.notAuthRoutes.indexOf(req.path) > -1
     const token = req.headers.authorization
     console.log(isNotAuthRoute, req.path);
 
     // 验证token
     if (token && !isNotAuthRoute) {
         const body = await this.checkToken(token.split('Bearer ')[1])
-        console.log(Date.now() < body.exp);
         if (Date.now() < body.exp) {
-            console.log(33333333333);
             next();
         } else {
-            console.log(44444444444);
             res.json({ status: false, result: 'expiration token' })
         }
     } else if (!token && !isNotAuthRoute) {

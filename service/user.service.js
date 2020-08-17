@@ -65,15 +65,17 @@ const Op = Sequelize.Op;
 exports.getUsers = async (req) => {
     const { id, name } = req;
     let whereObj = {}
+    let result
     if (id) whereObj.id = id
     if (name) whereObj.name = {
         [Op.like]: `%${name}%`,
     }
 
-    return models.User.findAll({
+    result = await models.User.findAndCountAll({
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
     })
+    return { status: true, result }
 }
 
 exports.createUser = async (req) => {

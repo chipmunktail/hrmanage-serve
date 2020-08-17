@@ -43,12 +43,12 @@ router.get('/testtoken', async (req, res, next) => {
 })
 
 router.get('/log', async (req, res, next) => {
-  models.Log.findAll({
+  models.Log.findAndCountAll({
     limit: 3,
     offset: 3,
     attributes: { exclude: ['createdAt', 'updatedAt'] },
   }).then(data => {
-    res.json(data)
+    res.json({status: false, result: data})
   });
 })
 
