@@ -46,7 +46,7 @@ exports.login = async (req) => {
             return { status: false }
         } else {
             // get role
-            const role = await roleService.getRoles({ id: data[0].roleId })
+            const role = await (await roleService.getRoles({ id: data[0].roleId })).result.rows;
             // gen token
             const token = service.genToken({
                 userName: data[0].name,
@@ -60,7 +60,7 @@ exports.login = async (req) => {
                 userId: data[0].id,
                 roleName: role[0].name,
                 operateType: 'DELETE.USER',
-                params: JSON.stringify({name, password: '******'})
+                params: JSON.stringify({ name, password: '******' })
             })
             // return
             return { status: true, data, token }

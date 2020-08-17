@@ -42,11 +42,11 @@ exports.isExpiration = async (req, res, next) => {
         if (Date.now() < body.exp) {
             next();
         } else {
-            res.json({ status: false, result: 'expiration token' })
+            res.json({ status: false, result: commonConfig.message.EXPIRATIONTOKEN })
         }
     } else if (!token && !isNotAuthRoute) {
         // 无token
-        res.json({ status: false, result: 'no token' })
+        res.json({ status: false, result: commonConfig.message.NOTOKEN })
     } else if (isNotAuthRoute) {
         // 无需验证token
         next();

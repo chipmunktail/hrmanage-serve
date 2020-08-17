@@ -4,6 +4,7 @@ var models = require('../db/models');
 // var service = require('../service/user.service');
 var service = require('../service/login.service');
 var tokenService = require('../utils/token.service')
+var logService = require('../service/log.service')
 
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -43,13 +44,7 @@ router.get('/testtoken', async (req, res, next) => {
 })
 
 router.get('/log', async (req, res, next) => {
-  models.Log.findAndCountAll({
-    limit: 3,
-    offset: 3,
-    attributes: { exclude: ['createdAt', 'updatedAt'] },
-  }).then(data => {
-    res.json({status: false, result: data})
-  });
+  res.json(await logService.getLogs(req.query))
 })
 
 module.exports = router;

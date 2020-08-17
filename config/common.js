@@ -6,3 +6,18 @@ exports.allRoutes = [
     '/role/getRoles', '/role/createRole', '/role/deleteRole', '/role/updateRole',
     '/user/getUsers', '/user/createUser', '/user/deleteUser', '/user/updateUser'
 ]
+
+exports.operateType = {
+    LOGIN: 'login',
+    LOGOUT: 'logout',
+    DELETE: {
+        USER: "delete user"
+    },
+}
+
+exports.defaultLimit = 20
+
+exports.message = {
+    NOTOKEN: 'no token',
+    EXPIRATIONTOKEN: 'expiration token'
+}

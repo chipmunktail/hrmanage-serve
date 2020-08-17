@@ -2,18 +2,13 @@ var models = require('../db/models');
 const Sequelize = require('sequelize');
 const service = require('../utils/token.service')
 const roleService = require('../service/role.service')
+const limitOffset = require('../utils/limitOffset')
 const Op = Sequelize.Op;
 
-const operateType = {
-    LOGIN: 'login',
-    LOGOUT: 'logout',
-    DELETE: {
-        USER: "delete user"
-    },
-}
+
 
 exports.getLogs = async (req) => {
-    const { limit, offset } = req
+    const { limit, offset } = limitOffset.getLimitOffset(req)
     return await models.Log.findAndCountAll({
         limit,
         offset,

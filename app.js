@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var rolesRouter = require('./routes/roles');
 var authsRouter = require('./routes/auths');
+var departmentRouter = require('./routes/departments');
 
 var tokenService = require('./utils/token.service')
 
@@ -32,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/role', rolesRouter);
 app.use('/auth', authsRouter);
+app.use('/department', departmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
