@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 var models = require('../db/models');
 // var service = require('../service/user.service');
 var service = require('../service/login.service');
@@ -19,10 +20,22 @@ router.get('/test', (req, res, next) => {
     where: whereObj,
     attributes: { exclude: ['createdAt', 'updatedAt'] },
   }).then(data => {
-    console.log(data)
     res.json(data)
   });
   // res.send('success')
+})
+router.get('/testDateLimit', (req, res, next) => {
+  const format = (time) => moment(time).format('YYYY-MM-DD HH:mm:ss')
+  let whereObj = {}
+  whereObj.logDate = {
+    [Op.between]: [format('2020-08-19 08:27:00'), format('2020-08-19 08:29:00')]
+  }
+  models.Log.findAll({
+    where: whereObj,
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+  }).then(data => {
+    res.json(data)
+  });
 })
 
 router.post('/login', async (req, res, next) => {
@@ -33,14 +46,14 @@ router.get('/testtoken', async (req, res, next) => {
   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidXNlcjEiLCJhdXRoIjoiW1NZU10iLCJleHAiOjE1OTc0ODMyNzUsImlhdCI6MTU5NzQ3OTY3NX0.wxT8lGLjQcYTRv-svNqk0ivq-Xw85fZkeGWJHL3tV3g'
   const token = req.headers.authorization.split('Bearer ')[1]
   await tokenService.checkToken(token)
-  .then(ress => {
-    res.json({status: true, result: ress})
-    return ress
-  })
-  .catch(err => {
-    res.json({status: false, result: err})
-    return err
-  })
+    .then(ress => {
+      res.json({ status: true, result: ress })
+      return ress
+    })
+    .catch(err => {
+      res.json({ status: false, result: err })
+      return err
+    })
 })
 
 router.get('/log', async (req, res, next) => {
