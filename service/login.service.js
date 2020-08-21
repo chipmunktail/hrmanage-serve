@@ -38,26 +38,27 @@ exports.login = async (req) => {
         return { status: false }
     }
     let whereObj = { name, password }
-    return models.User.findAll({
+    return models.User.findOne({
         where: whereObj,
         attributes: ['name', 'displayName', 'roleId', 'id'],
     }).then(async (data) => {
-        if (data.length !== 1) {
+        console.log(data.roleId);
+        if (!data) {
             return { status: false }
         } else {
             // get role
-            const role = await (await roleService.getRoles({ id: data[0].roleId })).result.rows;
+            const role = await (await roleService.getRoles({ id: data.roleId })).result.rows;
             // gen token
             const token = service.genToken({
-                userName: data[0].name,
-                userId: data[0].id,
+                userName: data.name,
+                userId: data.id,
                 roleName: role[0].name,
                 auth: role[0].authCode
             })
             // log
             logService.log({
-                userName: data[0].name,
-                userId: data[0].id,
+                userName: data.name,
+                userId: data.id,
                 roleName: role[0].name,
                 operateType: 'DELETE.USER',
                 params: JSON.stringify({ name, password: '******' })
