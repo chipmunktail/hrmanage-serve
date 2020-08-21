@@ -18,6 +18,9 @@ exports.operateType = {
 exports.defaultLimit = 20
 
 exports.message = {
+    DBERROR: 'db error',
     NOTOKEN: 'no token',
-    EXPIRATIONTOKEN: 'expiration token'
+    EXPIRATIONTOKEN: 'expiration token',
+    NOFREEHOUR: 'no freehour',
+    EXCEEDSFREEHOUR: 'exceeds freehour'
 }

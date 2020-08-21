@@ -105,13 +105,17 @@ exports.deleteUser = async (req) => {
 }
 
 exports.updateUser = async (req) => {
-    const { id, displayName, name, roleId, email } = req
+    const { id, displayName, name, roleId, jobId, departmentId, freeHour, salaryId, email } = req
     let result
-    if (id && (displayName || name || roleId || email)) {
+    if (id && (displayName || name || roleId || jobId || departmentId || freeHour || salaryId || email)) {
         result = await models.User.update({
             displayName,
             name,
             roleId,
+            jobId,
+            departmentId,
+            freeHour,
+            salaryId,
             email,
         }, {
             where: { id }

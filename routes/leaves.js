@@ -6,8 +6,8 @@ var service = require('../service/leave.service');
 router.get('/getLeaves', async (req, res, next) => {
     res.json(await service.getLeaves(req.query))
 })
-router.get('/createLeave', async (req, res, next) => {
-    res.json(await service.createLeave(req.query))
+router.post('/createLeave', async (req, res, next) => {
+    res.json(await service.createLeave(req.body))
 })
 router.get('/deleteLeave', async (req, res, next) => {
     res.json(await service.deleteLeave(req.query))
