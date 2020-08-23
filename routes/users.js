@@ -9,14 +9,14 @@ const Op = Sequelize.Op;
 router.get('/getUsers', async (req, res, next) => {
   res.json(await service.getUsers(req.query))
 })
-router.get('/createUser', async (req, res, next) => {
-  res.json(await service.createUser(req.query))
+router.post('/createUser', async (req, res, next) => {
+  res.json(await service.createUser(req.body))
 })
 router.get('/deleteUser', async (req, res, next) => {
   res.json(await service.deleteUser(req.query))
 })
-router.get('/updateUser', async (req, res, next) => {
-  res.json(await service.updateUser(req.query))
+router.post('/updateUser', async (req, res, next) => {
+  res.json(await service.updateUser(req.body))
 })
 
 module.exports = router;
