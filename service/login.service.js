@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const service = require('../utils/token.service')
 const roleService = require('../service/role.service')
 const logService = require('../service/log.service')
+const config = require('../config/common')
 const Op = Sequelize.Op;
 
 
@@ -42,9 +43,8 @@ exports.login = async (req) => {
         where: whereObj,
         attributes: ['name', 'displayName', 'roleId', 'id'],
     }).then(async (data) => {
-        console.log(data.roleId);
         if (!data) {
-            return { status: false }
+            return { status: false, message: config.message.WRONGUSERORPSD }
         } else {
             // get role
             const role = await (await roleService.getRoles({ id: data.roleId })).result.rows;

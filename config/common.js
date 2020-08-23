@@ -18,6 +18,7 @@ exports.operateType = {
 exports.defaultLimit = 20
 
 exports.message = {
+    WRONGUSERORPSD: 'wrong user or password ',
     DBERROR: 'db error',
     NOTOKEN: 'no token',
     EXPIRATIONTOKEN: 'expiration token',
