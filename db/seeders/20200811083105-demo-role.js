@@ -4,17 +4,17 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Roles', [{
       name: 'admin',
-      authCode: '[SYS]',
+      authCode: '[SYSTEMMANAGE]',
       createdAt:new Date(),
       updatedAt:new Date()
     },{
       name: 'hr',
-      authCode: '[HRM]',
+      authCode: '[HRMANAGE]',
       createdAt:new Date(),
       updatedAt:new Date()
     },{
       name: 'developer',
-      authCode: '[SYS,PRI]',
+      authCode: '[SYSTEMMANAGE,PRIVATE]',
       createdAt:new Date(),
       updatedAt:new Date()
     },], {});

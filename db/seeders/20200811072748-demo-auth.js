@@ -3,15 +3,15 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Auths', [{
-      code: 'SYSTEM',
+      code: 'SYSTEMMANAGE',
       createdAt:new Date(),
       updatedAt:new Date()
     },{
-      code: 'HRM',
+      code: 'HRMANAGE',
       createdAt:new Date(),
       updatedAt:new Date()
     },{
-      code: 'PRI',
+      code: 'PRIVATE',
       createdAt:new Date(),
       updatedAt:new Date()
     },], {});

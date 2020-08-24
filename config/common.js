@@ -1,7 +1,7 @@
-exports.notAuthRoutes = ['/login']
+exports.notAuthRoutes = ['/login', '/logout', '/testtoken']
 
 exports.allRoutes = [
-    '/test', '/testtoken', '/log',
+    '/test', '/log',
     '/auth/getAuths', '/auth/createAuth', '/auth/deleteAuth', '/auth/updateAuth',
     '/role/getRoles', '/role/createRole', '/role/deleteRole', '/role/updateRole',
     '/user/getUsers', '/user/createUser', '/user/deleteUser', '/user/updateUser'
