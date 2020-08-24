@@ -8,6 +8,7 @@ var tokenService = require('../utils/token.service')
 var logService = require('../service/log.service')
 
 const Sequelize = require('sequelize');
+
 const Op = Sequelize.Op;
 
 router.get('/test', (req, res, next) => {
@@ -42,6 +43,11 @@ router.post('/login', async (req, res, next) => {
   res.json(await service.login(req.body))
 })
 
+router.get('/logout', async (req, res, next) => {
+  res.json(await service.logout(req.query))
+})
+
+
 router.get('/testtoken', async (req, res, next) => {
   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidXNlcjEiLCJhdXRoIjoiW1NZU10iLCJleHAiOjE1OTc0ODMyNzUsImlhdCI6MTU5NzQ3OTY3NX0.wxT8lGLjQcYTRv-svNqk0ivq-Xw85fZkeGWJHL3tV3g'
   const token = req.headers.authorization.split('Bearer ')[1]
@@ -56,8 +62,12 @@ router.get('/testtoken', async (req, res, next) => {
     })
 })
 
-router.get('/log', async (req, res, next) => {
+router.get('/getLogs', async (req, res, next) => {
   res.json(await logService.getLogs(req.query))
+})
+
+router.get('/deleteLog', async (req, res, next) => {
+  res.json(await logService.deleteLog(req.query))
 })
 
 module.exports = router;

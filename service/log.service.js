@@ -8,12 +8,32 @@ const Op = Sequelize.Op;
 
 
 exports.getLogs = async (req) => {
+    const { userName } = req;
     const { limit, offset } = limitOffset.getLimitOffset(req)
-    return await models.Log.findAndCountAll({
+    let whereObj = {}
+    let result
+    if (userName) whereObj.userName = {
+        [Op.like]: `%${userName}%`,
+    }
+
+    result = await models.Log.findAndCountAll({
         limit,
         offset,
+        where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
     })
+    return { status: true, result }
+}
+
+exports.deleteLog = async (req) => {
+    const { id } = req
+    let result
+    if (id) {
+        result = await models.Log.destroy({
+            where: { id }
+        });
+    }
+    return { status: result }
 }
 
 exports.log = async (req) => {

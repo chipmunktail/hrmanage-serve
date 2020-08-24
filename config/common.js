@@ -8,10 +8,10 @@ exports.allRoutes = [
 ]
 
 exports.operateType = {
-    LOGIN: 'login',
-    LOGOUT: 'logout',
+    LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
     DELETE: {
-        USER: "delete user"
+        USER: "DELETE USER"
     },
 }
 
