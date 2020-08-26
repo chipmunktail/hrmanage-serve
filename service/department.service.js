@@ -62,39 +62,3 @@ exports.updateDepartment = async (req) => {
     }
     return { status: result }
 }
-
-// todo 关联
-exports.getUser = async (req) => {
-    const { id, departmentId } = req;
-    let whereObj = {}
-    let result
-
-    if (id) whereObj.id = id
-    if (departmentId) whereObj.departmentId = departmentId
-
-    result = await models.DepartmentUser.findAndCountAll({
-        where: whereObj,
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-    })
-
-    // const { id, name } = req.query;
-    // let whereObj = {}
-    // if (id) whereObj.id = {
-    //   [Op.in]: [7, 8]
-    // }
-    // models.Role.findAll({
-    //   where: whereObj,
-    //   attributes: { exclude: ['createdAt', 'updatedAt'] },
-    // }).then(data => {
-    //   console.log(data)
-    //   res.json(data)
-    // });
-
-    return { status: true, result }
-}
-
-exports.addUser = async (req) => { }
-
-exports.updateUser = async (req) => { }
-
-exports.deleteUser = async (req) => { }

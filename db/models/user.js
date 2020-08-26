@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsTo(models.Department)
-      // User.belongsTo(models.Department, {through: 'DepartmentUser'})
+      User.belongsTo(models.Job)
     }
   };
   User.init({

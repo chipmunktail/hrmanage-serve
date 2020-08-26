@@ -19,6 +19,9 @@ exports.getJobs = async (req) => {
         offset,
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [
+            {model: models.User, as: 'jobUser', attributes: ['id', 'displayName', 'name', 'jobId']}
+        ]
     })
     return { status: true, result }
 }
@@ -57,26 +60,3 @@ exports.updateJob = async (req) => {
     }
     return { status: result }
 }
-
-// todo 关联
-exports.getUser = async (req) => {
-    const { id, departmentId } = req;
-    let whereObj = {}
-    let result
-
-    if (id) whereObj.id = id
-    if (departmentId) whereObj.departmentId = departmentId
-
-    result = await models.JobUser.findAndCountAll({
-        where: whereObj,
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-    })
-
-    return { status: true, result }
-}
-
-exports.addUser = async (req) => { }
-
-exports.updateUser = async (req) => { }
-
-exports.deleteUser = async (req) => { }

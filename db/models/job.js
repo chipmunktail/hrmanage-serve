@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Job.hasMany(models.User, {
+        foreignKey: 'jobId',
+        sourceKey: 'id',
+        as: 'jobUser'
+      })
     }
   };
   Job.init({
