@@ -19,6 +19,10 @@ exports.getDepartments = async (req) => {
         offset,
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [
+            {model: models.User, attributes: ['id', 'displayName', 'name', 'DepartmentId']},
+            {model: models.User, as: 'departmentUser', attributes: ['id', 'displayName', 'name', 'DepartmentId']}
+        ]
     })
     return { status: true, result }
 }
@@ -46,11 +50,12 @@ exports.deleteDepartment = async (req) => {
 }
 
 exports.updateDepartment = async (req) => {
-    const { id, name } = req
+    const { id, name, managerId } = req
     let result
-    if (id && (name)) {
+    if (id && (name || managerId)) {
         result = await models.Department.update({
             name,
+            managerId,
         }, {
             where: { id }
         });

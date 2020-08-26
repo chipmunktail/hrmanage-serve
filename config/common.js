@@ -15,7 +15,10 @@ exports.operateType = {
     },
 }
 
-exports.defaultLimit = 20
+exports.defaultLimit = 20 // default page size
+exports.expiredTime = 60 * 60 * 1000
+exports.secret = 'secret'
+
 
 exports.message = {
     WRONGUSERORPSD: 'wrong user or password ',
@@ -24,4 +27,11 @@ exports.message = {
     EXPIRATIONTOKEN: 'expiration token',
     NOFREEHOUR: 'no freehour',
     EXCEEDSFREEHOUR: 'exceeds freehour'
+}
+
+exports.isNumber = (num) => {
+    return typeof parseInt(num) === 'number'
+        && num !== NaN
+        && num !== Infinity
+        && num !== undefined
 }

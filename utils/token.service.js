@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const commonConfig = require('../config/common')
-const secret = 'secret'
 
 
 exports.genToken = (signObj) => {
@@ -10,15 +9,15 @@ exports.genToken = (signObj) => {
             roleName: signObj.roleName,
             userId: signObj.userId,
             auth: signObj.auth,
-            exp: Math.floor(Date.now()) + (60 * 60 * 1000),
+            exp: Math.floor(Date.now()) + commonConfig.expiredTime,
             iat: Math.floor(Date.now())
         },
-        secret
+        commonConfig.secret
     )
 }
 exports.checkToken = (token) => {
     return new Promise((resolve, reject) => {
-        return jwt.verify(token, secret, function (err, decoded) {
+        return jwt.verify(token, commonConfig.secret, function (err, decoded) {
             if (err) {
                 reject(JSON.stringify(err));
             }
@@ -34,7 +33,7 @@ exports.isExpiration = async (req, res, next) => {
     // 保护路由
     isNotAuthRoute = commonConfig.notAuthRoutes.indexOf(req.path) > -1
     const token = req.headers.authorization
-    console.log(isNotAuthRoute, req.path);
+    // console.log(isNotAuthRoute, req.path);
 
     // 验证token
     if (token && !isNotAuthRoute) {

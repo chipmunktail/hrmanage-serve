@@ -7,10 +7,10 @@ exports.getLimitOffset = (req) => {
     const reqLimit = req.pageSize
     const reqOffset = req.pageIndex
     console.log(reqLimit, reqOffset);
-    if (typeof parseInt(reqLimit) === 'number' && reqLimit !== NaN && reqLimit !== Infinity && reqLimit !== undefined) {
+    if (commonConfig.isNumber(reqLimit)) {
         limit_ = parseInt(reqLimit)
     }
-    if (typeof parseInt(reqOffset) === 'number' && reqOffset !== NaN && reqOffset !== Infinity && reqOffset !== undefined) {
+    if (commonConfig.isNumber(reqLimit)) {
         offset_ = parseInt(reqOffset) * limit_
     }
     console.log(limit_, offset_);
