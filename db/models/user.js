@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.belongsTo(models.Department)
       User.belongsTo(models.Job)
+      User.belongsTo(models.Salary)
     }
   };
   User.init({

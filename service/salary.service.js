@@ -19,6 +19,9 @@ exports.getSalarys = async (req) => {
         offset,
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [
+            {model: models.User, attributes: ['id', 'displayName', 'name', 'salaryId']}
+        ]
     })
     return { status: true, result }
 }
