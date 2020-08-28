@@ -19,19 +19,20 @@ exports.getSalarys = async (req) => {
         offset,
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        order: [['id', 'ASC']],
         include: [
-            {model: models.User, attributes: ['id', 'displayName', 'name', 'salaryId']}
+            { model: models.User, attributes: ['id', 'displayName', 'name', 'salaryId'] }
         ]
     })
     return { status: true, result }
 }
 
 exports.createSalary = async (req) => {
-    const { name } = req
+    const { salary } = req
     let result
-    if (name) {
+    if (salary) {
         result = await models.Salary.create({
-            name,
+            salary,
         })
     }
     return { status: result instanceof models.Salary, result }
@@ -49,11 +50,11 @@ exports.deleteSalary = async (req) => {
 }
 
 exports.updateSalary = async (req) => {
-    const { id, name } = req
+    const { id, salary } = req
     let result
-    if (id && (name)) {
+    if (id && (salary)) {
         result = await models.Salary.update({
-            name,
+            salary,
         }, {
             where: { id }
         });

@@ -12,14 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Salary.hasOne(models.User, {
-        foreignKey: 'id',
-        sourceKey: 'id'
+        foreignKey: 'salaryId',
+        sourceKey: 'id',
+        onDelete: 'RESTRICT',
+        onUpdate: 'RESTRICT'
       })
     }
   };
   Salary.init({
     salary: DataTypes.FLOAT,
-    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Salary',

@@ -30,8 +30,9 @@ exports.message = {
 }
 
 exports.isNumber = (num) => {
-    return typeof parseInt(num) === 'number'
-        && num !== NaN
+    return 
+        isNaN(num)
         && num !== Infinity
         && num !== undefined
+        && typeof parseInt(num) === 'number'
 }
