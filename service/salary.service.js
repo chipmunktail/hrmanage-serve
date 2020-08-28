@@ -5,14 +5,16 @@ const Op = Sequelize.Op;
 
 
 exports.getSalarys = async (req) => {
-    const { id, name } = req;
+    const { id, salary } = req;
     const { limit, offset } = limitOffset.getLimitOffset(req)
     let whereObj = {}
     let result
     if (id) whereObj.id = id
-    if (name) whereObj.name = {
-        [Op.like]: `%${name}%`,
-    }
+    if (salary) whereObj.salary = parseInt(salary)
+    // if (salary) whereObj.salary = {
+    //     [Op.like]: `%${salary}%`,
+    // }
+
 
     result = await models.Salary.findAndCountAll({
         limit,

@@ -18,6 +18,8 @@ exports.operateType = {
 exports.defaultLimit = 20 // default page size
 exports.expiredTime = 60 * 60 * 1000
 exports.secret = 'secret'
+exports.timeFormat = 'YYYY-MM-DD HH:mm:ss' // 格式换时间
+exports.rankLevel = ['A', 'B', 'C', 'D'] // performance等级
 
 
 exports.message = {

@@ -1,14 +1,15 @@
 const models = require('../db/models');
 const Sequelize = require('sequelize');
-const moment =require('moment');
+const moment = require('moment');
 const limitOffset = require('../utils/limitOffset');
+const config = require('../config/common');
 const Op = Sequelize.Op;
 
 
 exports.getPerformances = async (req) => {
     const { id, month, rankDate, rankLevel, userId } = req;
     const { limit, offset } = limitOffset.getLimitOffset(req)
-    const format = (time) => moment(time).format('YYYY-MM-DD HH:mm:ss')
+    const format = (time) => moment(time).format(config.timeFormat)
     let whereObj = {}
     let result
     if (id) whereObj.id = id
