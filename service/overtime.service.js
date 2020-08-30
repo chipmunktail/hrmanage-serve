@@ -17,7 +17,7 @@ const compareOvertimeAndStartEnd = (sumHour, start, end) => {
         return { status: false, message: config.message.NOOVERTIMEEND }
     }
     const startEnd = (Date.now(end) - Date.now(start)) / (1000 * 60 * 60)
-    if (startEnd > sumHour) {
+    if (startEnd < sumHour) {
         return { status: false, message: config.message.OVEROVERTIMELENGTH }
     }
     return { status: true }
