@@ -22,6 +22,23 @@ const countOvertime = async (userId) => {
 
     return { status: false, message: config.message.DBERROR }
 }
+// 检测开始结束时间是否大于 请假时长
+const compareLeaveAndStartEnd = (sumHour, start, end) => {
+    if (!sumHour) {
+        return { status: false, message: config.message.NOLEAVESUMHOUR }
+    }
+    if (!start) {
+        return { status: false, message: config.message.NOLEAVESTART }
+    }
+    if (!end) {
+        return { status: false, message: config.message.NOLEAVEEND }
+    }
+    const startEnd = Math.ceil((Date.now(end) - Date.now(start)) / (1000 * 60 * 60))
+    if (startEnd > sumHour) {
+        return { status: false, message: config.message.OVERLEAVELENGTH }
+    }
+    return { status: true }
+}
 
 exports.getLeaves = async (req) => {
     const { id, leaveDate, leaveStart, leaveEnd, sumHour, userId } = req;
@@ -44,6 +61,13 @@ exports.createLeave = async (req) => {
     const { leaveDate, leaveStart, leaveEnd, sumHour, userId } = req;
     // 查询overtime时长
     const countOvertimeResult = await countOvertime(userId)
+    // 判断leave时长
+    const checkLeaveLength = compareLeaveAndStartEnd(sumHour, leaveStart, leaveEnd)
+
+    // 检查leave时长是否正确
+    if (!checkLeaveLength.status) {
+        return checkLeaveLength
+    }
     // 异常状态
     if (!countOvertimeResult.status) {
         return countOvertimeResult
@@ -52,6 +76,7 @@ exports.createLeave = async (req) => {
     if (sumHour > countOvertimeResult.freeHour) {
         return { status: false, message: config.message.EXCEEDSFREEHOUR }
     }
+    
     // 更新user freeHour
     await userService.updateUser({ id: userId, freeHour: countOvertimeResult.freeHour - sumHour }) // todo 整数sumHour
     // 增加leave记录

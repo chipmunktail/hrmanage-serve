@@ -13,6 +13,7 @@ var jobRouter = require('./routes/jobs');
 var salaryRouter = require('./routes/salaries');
 var performanceRouter = require('./routes/performance');
 var leaveRouter = require('./routes/leaves')
+var overtimeRouter = require('./routes/overtimes')
 
 var tokenService = require('./utils/token.service')
 
@@ -53,6 +54,7 @@ app.use('/job', jobRouter);
 app.use('/salary', salaryRouter);
 app.use('/performance', performanceRouter);
 app.use('/leave', leaveRouter);
+app.use('/overtime', overtimeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

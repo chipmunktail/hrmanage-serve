@@ -28,12 +28,19 @@ exports.message = {
     NOTOKEN: 'no token',
     EXPIRATIONTOKEN: 'expiration token',
     NOFREEHOUR: 'no freehour',
-    EXCEEDSFREEHOUR: 'exceeds freehour'
+    EXCEEDSFREEHOUR: 'exceeds freehour',
+    NOLEAVESUMHOUR: 'no leave sumhour',
+    NOLEAVESTART: 'no leave start',
+    NOLEAVEEND: 'no leave end',
+    OVERLEAVELENGTH: 'over leave length',
+    NOOVERTIMESUMHOUR: 'no overtime sumhour',
+    NOOVERTIMESTART: 'no overtime start',
+    NOOVERTIMEEND: 'no overtime end',
+    OVEROVERTIMELENGTH: 'over overtime length'
 }
 
 exports.isNumber = (num) => {
-    return 
-        isNaN(num)
+    return !isNaN(num)
         && num !== Infinity
         && num !== undefined
         && typeof parseInt(num) === 'number'
