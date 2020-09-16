@@ -18,7 +18,7 @@ exports.getDepartments = async (req) => {
         limit,
         offset,
         where: whereObj,
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        attributes: { exclude: [/*'createdAt', 'updatedAt'*/] },
         include: [
             {model: models.User, attributes: ['id', 'displayName', 'name', 'DepartmentId']},
             {model: models.User, as: 'departmentUser', attributes: ['id', 'displayName', 'name', 'DepartmentId']}

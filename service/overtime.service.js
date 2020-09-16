@@ -67,11 +67,27 @@ exports.createOvertime = async (req) => {
     // 返回结果
     return { status: result instanceof models.Overtime, result }
 }
-
-exports.deleteOvertime = () => {
-
+// 不可删除
+exports.deleteOvertime = async () => {
+    const { id } = req
+    let result
+    if (id) {
+        result = await models.Overtime.destroy({
+            where: { id }
+        });
+    }
+    return { status: result }
 }
 
-exports.updateOvertime = () => {
-
+exports.updateOvertime = async () => {
+    const { id, name } = req
+    let result
+    if (id && (name)) {
+        result = await models.Overtime.update({
+            name,
+        }, {
+            where: { id }
+        });
+    }
+    return { status: result }
 }
