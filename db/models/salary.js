@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Salary.init({
     salary: DataTypes.FLOAT,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Salary',

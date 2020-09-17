@@ -1,6 +1,8 @@
 const models = require('../db/models');
 const Sequelize = require('sequelize');
 const limitOffset = require('../utils/limitOffset')
+const userService = require('../service/user.service')
+const config = require('../config/common')
 const Op = Sequelize.Op;
 
 
@@ -30,20 +32,38 @@ exports.getSalarys = async (req) => {
 }
 
 exports.createSalary = async (req) => {
-    const { salary } = req
+    const { salary, userId } = req
     let result
-    if (salary) {
+    let userResult
+    if (userId) {
+        userResult = await userService.getUsers({ id: userId })
+        if (userResult.result.rows[0].salaryId) {
+            return { status: false, message: config.message.EXISTSALARY }
+        }
+    }
+    if (salary && userId) {
+        console.log(salary, userId);
         result = await models.Salary.create({
             salary,
+            userId,
         })
+        // 更新user salaryId
+        userResult = await userService.updateUser({ id: userId, salaryId: result.id })
     }
-    return { status: result instanceof models.Salary, result }
+    return { status: result instanceof models.Salary && userResult.status.length === 1, result }
 }
 
 exports.deleteSalary = async (req) => {
-    const { id } = req
+    const { id, userId } = req
     let result
-    if (id) {
+    const userResult = await userService.getUsers({ id: userId })
+    console.log(userResult, '=======');
+    // 是否存在用户
+    if (userResult.status && userResult.result.count === 1 && userResult.result.rows[0].salaryId) {
+        return { status: false, message: config.message.EXISTUSER }
+    }
+    if (id && userId) {
+        // 删除salary
         result = await models.Salary.destroy({
             where: { id }
         });
@@ -52,11 +72,19 @@ exports.deleteSalary = async (req) => {
 }
 
 exports.updateSalary = async (req) => {
-    const { id, salary } = req
+    const { id, salary, userId } = req
     let result
-    if (id && (salary)) {
+    if (userId) {
+        const userResult = await userService.getUsers({ id: userId })
+        const salaryId = userResult.result.rows[0].salaryId
+        if (salaryId && salaryId !== id) {
+            return { status: false, message: config.message.EXISTSALARY }
+        }
+    }
+    if (id && (salary || userId)) {
         result = await models.Salary.update({
             salary,
+            userId,
         }, {
             where: { id }
         });

@@ -36,7 +36,9 @@ exports.message = {
     NOOVERTIMESUMHOUR: 'no overtime sumhour',
     NOOVERTIMESTART: 'no overtime start',
     NOOVERTIMEEND: 'no overtime end',
-    OVEROVERTIMELENGTH: 'over overtime length'
+    OVEROVERTIMELENGTH: 'over overtime length',
+    EXISTUSER: 'exist user',
+    EXISTSALARY: 'exist salary',
 }
 
 exports.isNumber = (num) => {
