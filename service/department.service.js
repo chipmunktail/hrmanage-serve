@@ -20,19 +20,20 @@ exports.getDepartments = async (req) => {
         where: whereObj,
         attributes: { exclude: [/*'createdAt', 'updatedAt'*/] },
         include: [
-            {model: models.User, attributes: ['id', 'displayName', 'name', 'DepartmentId']},
-            {model: models.User, as: 'departmentUser', attributes: ['id', 'displayName', 'name', 'DepartmentId']}
+            { model: models.User, attributes: ['id', 'displayName', 'name', 'DepartmentId'] },
+            { model: models.User, as: 'departmentUser', attributes: ['id', 'displayName', 'name', 'DepartmentId'] }
         ]
     })
     return { status: true, result }
 }
 
 exports.createDepartment = async (req) => {
-    const { name } = req
+    const { name, managerId } = req
     let result
-    if (name) {
+    if (name && managerId) {
         result = await models.Department.create({
             name,
+            managerId,
         })
     }
     return { status: result instanceof models.Department, result }
