@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var models = require('../db/models');
+const commonConfig = require('../config/common')
 // var service = require('../service/user.service');
 var service = require('../service/login.service');
 var tokenService = require('../utils/token.service')
@@ -53,8 +54,12 @@ router.get('/testtoken', async (req, res, next) => {
   const token = req.headers.authorization.split('Bearer ')[1]
   await tokenService.checkToken(token)
     .then(ress => {
-      res.json({ status: true, result: ress })
-      return ress
+      if (Date.now() >= ress.exp) {
+        res.json({ status: false, result: commonConfig.message.EXPIRATIONTOKEN })
+      } else {
+        res.json({ status: true, result: ress })
+      }
+      return ress;
     })
     .catch(err => {
       res.json({ status: false, result: err })
