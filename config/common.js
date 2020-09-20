@@ -23,22 +23,23 @@ exports.rankLevel = ['A', 'B', 'C', 'D'] // performance等级
 
 
 exports.message = {
-    WRONGUSERORPSD: 'wrong user or password ',
-    DBERROR: 'db error',
-    NOTOKEN: 'no token',
-    EXPIRATIONTOKEN: 'expiration token',
-    NOFREEHOUR: 'no freehour',
-    EXCEEDSFREEHOUR: 'exceeds freehour',
-    NOLEAVESUMHOUR: 'no leave sumhour',
-    NOLEAVESTART: 'no leave start',
-    NOLEAVEEND: 'no leave end',
-    OVERLEAVELENGTH: 'over leave length',
-    NOOVERTIMESUMHOUR: 'no overtime sumhour',
-    NOOVERTIMESTART: 'no overtime start',
-    NOOVERTIMEEND: 'no overtime end',
-    OVEROVERTIMELENGTH: 'over overtime length',
-    EXISTUSER: 'exist user',
-    EXISTSALARY: 'exist salary',
+    WRONGUSERORPSD: 'wrong user or password ', // 错误账号或密码
+    DBERROR: 'db error', // 数据库报错
+    NOTOKEN: 'no token', // 无授权
+    EXPIRATIONTOKEN: 'expiration token', // 授权过期
+    NOFREEHOUR: 'no freehour', // 可调休时长不足
+    EXCEEDSFREEHOUR: 'exceeds freehour', // 超过可调休时长
+    NOLEAVESUMHOUR: 'no leave sumhour', // 没有请假时间?
+    NOLEAVESTART: 'no leave start', // 缺少请假开始时间
+    NOLEAVEEND: 'no leave end', // 缺少请假结束时间
+    OVERLEAVELENGTH: 'over leave length', // 超过请假时长
+    NOOVERTIMESUMHOUR: 'no overtime sumhour', // 没有加班时间?
+    NOOVERTIMESTART: 'no overtime start', // 缺少加班开始时间
+    NOOVERTIMEEND: 'no overtime end', // 缺少加班结束时间
+    OVEROVERTIMELENGTH: 'over overtime length', // 超过加班时长
+    EXISTUSER: 'exist user', // 已存在员工
+    EXISTSALARY: 'exist salary', // 已存在薪资
+    CURRENTEXISTPERFORMANCE: 'current exist performance', // 当月员工已有绩效评分
 }
 
 exports.isNumber = (num) => {

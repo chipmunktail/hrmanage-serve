@@ -57,7 +57,6 @@ exports.deleteSalary = async (req) => {
     const { id, userId } = req
     let result
     const userResult = await userService.getUsers({ id: userId })
-    console.log(userResult, '=======');
     // 是否存在用户
     if (userResult.status && userResult.result.count === 1 && userResult.result.rows[0].salaryId) {
         return { status: false, message: config.message.EXISTUSER }

@@ -14,8 +14,8 @@ exports.getPerformances = async (req) => {
     let result
     if (id) whereObj.id = id
     if (month) whereObj.month = month
-    if (rankDate) whereObj.rankDate = {
-        [Op.between]: [format(rankDate.start), format(rankDate.end)]
+    if (rankDate && rankDate.length === 2) whereObj.rankDate = {
+        [Op.between]: [format(rankDate[0]), format(rankDate[1])]
     }
     if (rankLevel) whereObj.rankLevel = rankLevel
     if (userId) whereObj.userId = userId
@@ -24,18 +24,26 @@ exports.getPerformances = async (req) => {
         limit,
         offset,
         where: whereObj,
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        attributes: { /**exclude: ['createdAt', 'updatedAt'] */ },
     })
     return { status: true, result }
 }
 
 exports.createPerformance = async (req) => {
-    const { month, rankLevel, userId } = req;
+    const { rankDate, month, rankLevel, userId } = req;
     let result
-    if (month && rankLevel && userId) {
+    // 查询当月该员工是否已有数据
+    const performanceResult = await this.getPerformances({ userId, month })
+    if (!performanceResult.result) {
+        return { status: false, message: config.message.DBERROR }
+    }
+    if (performanceResult.result.count > 0) {
+        return { status: false, message: config.message.CURRENTEXISTPERFORMANCE }
+    }
+    // 创建数据
+    if (rankDate && month && rankLevel && userId) {
         result = await models.Performance.create({
-            rankDate: new Date(),
-            month, rankLevel, userId
+            rankDate, month, rankLevel, userId
         })
     }
     return { status: result instanceof models.Performance, result }
