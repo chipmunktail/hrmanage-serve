@@ -8,6 +8,7 @@ module.exports = {
       overtimeEnd: new Date(),
       sumHour: 3,
       userId: 1,
+      remark: "test",
       createdAt:new Date(),
       updatedAt:new Date()
     },{
@@ -16,6 +17,7 @@ module.exports = {
       overtimeEnd: new Date(),
       sumHour: 4,
       userId: 2,
+      remark: "test",
       createdAt:new Date(),
       updatedAt:new Date()
     },{
@@ -24,6 +26,7 @@ module.exports = {
       overtimeEnd: new Date(),
       sumHour: 5,
       userId: 3,
+      remark: "test",
       createdAt:new Date(),
       updatedAt:new Date()
     },], {});

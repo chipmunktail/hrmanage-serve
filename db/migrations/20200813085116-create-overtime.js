@@ -23,6 +23,9 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
+      remark: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

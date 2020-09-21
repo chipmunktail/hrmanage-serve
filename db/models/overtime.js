@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     overtimeStart: DataTypes.DATE,
     overtimeEnd: DataTypes.DATE,
     sumHour: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    remark: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Overtime',
