@@ -24,7 +24,11 @@ exports.getPerformances = async (req) => {
         limit,
         offset,
         where: whereObj,
+        order: [['month', 'ASC']],
         attributes: { /**exclude: ['createdAt', 'updatedAt'] */ },
+        include: [
+            { model: models.User, attributes: ['id', 'displayName', 'name'] }
+        ]
     })
     return { status: true, result }
 }
