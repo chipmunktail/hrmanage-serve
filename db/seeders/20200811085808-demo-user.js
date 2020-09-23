@@ -18,7 +18,7 @@ module.exports = {
     },{
       displayName: 'user2',
       name: 'user2',
-      roleId: 1,
+      roleId: 2,
       jobId: 2,
       departmentId: 2,
       freeHour: 0,
@@ -31,7 +31,7 @@ module.exports = {
     },{
       displayName: 'user3',
       name: 'user3',
-      roleId: 1,
+      roleId: 3,
       jobId: 3,
       departmentId: 3,
       freeHour: 0,
