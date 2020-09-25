@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         sourceKey: 'id',
       })
+      User.hasMany(models.Overtime, {
+        foreignKey: 'userId',
+        sourceKey: 'id',
+      })
     }
   };
   User.init({

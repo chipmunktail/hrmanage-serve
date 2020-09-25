@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Overtime.belongsTo(models.User)
     }
   };
   Overtime.init({
@@ -20,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     sumHour: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     remark: DataTypes.STRING,
+    auditStatus: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Overtime',

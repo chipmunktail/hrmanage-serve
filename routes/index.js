@@ -50,7 +50,6 @@ router.get('/logout', async (req, res, next) => {
 
 
 router.get('/testtoken', async (req, res, next) => {
-  // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidXNlcjEiLCJhdXRoIjoiW1NZU10iLCJleHAiOjE1OTc0ODMyNzUsImlhdCI6MTU5NzQ3OTY3NX0.wxT8lGLjQcYTRv-svNqk0ivq-Xw85fZkeGWJHL3tV3g'
   const token = req.headers.authorization.split('Bearer ')[1]
   await tokenService.checkToken(token)
     .then(ress => {

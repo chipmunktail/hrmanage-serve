@@ -26,6 +26,9 @@ module.exports = {
       remark: {
         type: Sequelize.STRING
       },
+      auditStatus: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -2,6 +2,7 @@ var models = require('../db/models');
 const Sequelize = require('sequelize');
 const limitOffset = require('../utils/limitOffset')
 const userService = require('../service/user.service')
+var tokenService = require('../utils/token.service')
 const config = require('../config/common')
 const Op = Sequelize.Op;
 
@@ -16,7 +17,8 @@ const compareOvertimeAndStartEnd = (sumHour, start, end) => {
     if (!end) {
         return { status: false, message: config.message.NOOVERTIMEEND }
     }
-    const startEnd = (Date.now(end) - Date.now(start)) / (1000 * 60 * 60)
+    const startEnd = (new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60)
+    // const caclSumHour = Math.floor(startEnd)
     if (startEnd < sumHour) {
         return { status: false, message: config.message.OVEROVERTIMELENGTH }
     }
@@ -24,28 +26,35 @@ const compareOvertimeAndStartEnd = (sumHour, start, end) => {
 }
 
 exports.getOvertimes = async (req) => {
-    const { id, overtimeDate, overtimeStart, overtimeEnd, sumHour, userId } = req;
-    const { limit, offset } = limitOffset.getLimitOffset(req)
+    const { id, overtimeDate, overtimeStart, overtimeEnd, sumHour, userId, auditStatus, isPrivate } = req.query;
+    const { limit, offset } = limitOffset.getLimitOffset(req.query)
+
+    // 判断是否是hr角色
+    const token = req.headers.authorization.split('Bearer ')[1]
+    const userInfo = await tokenService.checkToken(token)
+    const isHrmanage = userInfo.auth.indexOf('HRMANAGE') > -1
+
     let whereObj = {}
     let result
     if (id) whereObj.id = id
-    if (userId) whereObj.userId = userId
+    if (auditStatus) whereObj.auditStatus = auditStatus
+    if (isPrivate || !isHrmanage) whereObj.userId = userInfo.userId
 
     result = await models.Overtime.findAndCountAll({
         limit,
         offset,
         where: whereObj,
+        order: [['overtimeDate', 'ASC']],
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [
+            { model: models.User, attributes: ['id', 'displayName', 'name'] }
+        ]
     })
     return { status: true, result }
 }
 
 exports.createOvertime = async (req) => {
-    const { overtimeDate, overtimeStart, overtimeEnd, sumHour, userId } = req;
-
-    // 获取user freeHour
-    const userResult = await userService.getUsers({ id: userId })
-    const user = userResult.result.rows[0]
+    const { overtimeDate, overtimeStart, overtimeEnd, sumHour, userId, remark } = req;
 
     // 判断overtime时长
     const checkOvertimeLength = compareOvertimeAndStartEnd(sumHour, overtimeStart, overtimeEnd)
@@ -54,14 +63,22 @@ exports.createOvertime = async (req) => {
     if (!checkOvertimeLength.status) {
         return checkOvertimeLength
     }
-    
-    // 更新user freeHour
-    await userService.updateUser({ id: userId, freeHour: user.freeHour + sumHour }) // todo 整数sumHour
+
+    // // 获取user freeHour
+    // const userResult = await userService.getUsers({ id: userId })
+    // const user = userResult.result.rows[0]
+
+    // // 更新user freeHour
+    // await userService.updateUser({ id: userId, freeHour: user.freeHour + sumHour }) // todo 整数sumHour
+
+    // auditStatus
+
     // 增加overtime记录
     let result
-    if (overtimeDate && overtimeStart && overtimeEnd && sumHour && userId) {
+    if (overtimeDate && overtimeStart && overtimeEnd && sumHour && userId && remark) {
         result = await models.Overtime.create({
-            overtimeDate, overtimeStart, overtimeEnd, sumHour, userId
+            overtimeDate, overtimeStart, overtimeEnd, sumHour, userId, remark,
+            auditStatus: 1
         })
     }
     // 返回结果

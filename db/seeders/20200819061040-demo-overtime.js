@@ -9,6 +9,7 @@ module.exports = {
       sumHour: 3,
       userId: 1,
       remark: "test",
+      auditStatus: 4,
       createdAt:new Date(),
       updatedAt:new Date()
     },{
@@ -18,6 +19,7 @@ module.exports = {
       sumHour: 4,
       userId: 2,
       remark: "test",
+      auditStatus: 4,
       createdAt:new Date(),
       updatedAt:new Date()
     },{
@@ -27,6 +29,7 @@ module.exports = {
       sumHour: 5,
       userId: 3,
       remark: "test",
+      auditStatus: 4,
       createdAt:new Date(),
       updatedAt:new Date()
     },], {});
