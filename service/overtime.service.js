@@ -70,8 +70,6 @@ exports.createOvertime = async (req) => {
         return checkOvertimeLength
     }
 
-
-
     // 增加overtime记录
     let result
     if (overtimeDate && overtimeStart && overtimeEnd && sumHour && userId && remark) {

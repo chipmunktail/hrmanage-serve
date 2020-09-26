@@ -1,7 +1,9 @@
 const models = require('../db/models');
 const Sequelize = require('sequelize');
 const limitOffset = require('../utils/limitOffset')
+const moment = require('moment');
 const userService = require('../service/user.service')
+var tokenService = require('../utils/token.service')
 const config = require('../config/common')
 const Op = Sequelize.Op;
 
@@ -41,18 +43,34 @@ const compareLeaveAndStartEnd = (sumHour, start, end) => {
 }
 
 exports.getLeaves = async (req) => {
-    const { id, leaveDate, leaveStart, leaveEnd, sumHour, userId } = req;
+    const { id, leaveDate, leaveStart, leaveEnd, sumHour, userId, auditStatus, isPrivate } = req;
     const { limit, offset } = limitOffset.getLimitOffset(req)
+
+    const format = (time) => moment(time).format(config.timeFormat)
+
+    // 判断是否是hr角色
+    const token = req.headers.authorization.split('Bearer ')[1]
+    const userInfo = await tokenService.checkToken(token)
+    const isHrmanage = userInfo.auth.indexOf('HRMANAGE') > -1
+
     let whereObj = {}
     let result
     if (id) whereObj.id = id
-    if (userId) whereObj.userId = userId
+    if (auditStatus) whereObj.auditStatus = auditStatus
+    if (leaveDate && leaveDate.length === 2) whereObj.leaveDate = {
+        [Op.between]: [format(leaveDate[0]), format(leaveDate[1])]
+    }
+    if (isPrivate === "true" || !isHrmanage) whereObj.userId = userInfo.userId
 
     result = await models.Leave.findAndCountAll({
         limit,
         offset,
         where: whereObj,
+        order: [['leaveDate', 'ASC']],
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [
+            { model: models.User, attributes: ['id', 'displayName', 'name'] }
+        ]
     })
     return { status: true, result }
 }

@@ -23,6 +23,15 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
+      remark: {
+        type: Sequelize.STRING
+      },
+      auditStatus: {
+        type: Sequelize.STRING
+      },
+      leaveType: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

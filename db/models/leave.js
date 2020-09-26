@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Leave.belongsTo(models.User)
     }
   };
   Leave.init({
@@ -18,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     leaveStart: DataTypes.DATE,
     leaveEnd: DataTypes.DATE,
     sumHour: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    remark: DataTypes.STRING,
+    auditStatus: DataTypes.INTEGER,
+    leaveType: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Leave',

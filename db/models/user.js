@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         sourceKey: 'id',
       })
+      User.hasMany(models.Leave, {
+        foreignKey: 'userId',
+        sourceKey: 'id',
+      })
     }
   };
   User.init({
