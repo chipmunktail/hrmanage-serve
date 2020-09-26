@@ -1,6 +1,7 @@
 var models = require('../db/models');
 const Sequelize = require('sequelize');
 const limitOffset = require('../utils/limitOffset')
+const moment = require('moment');
 const userService = require('../service/user.service')
 var tokenService = require('../utils/token.service')
 const config = require('../config/common')
@@ -29,6 +30,8 @@ exports.getOvertimes = async (req) => {
     const { id, overtimeDate, overtimeStart, overtimeEnd, sumHour, userId, auditStatus, isPrivate } = req.query;
     const { limit, offset } = limitOffset.getLimitOffset(req.query)
 
+    const format = (time) => moment(time).format(config.timeFormat)
+
     // 判断是否是hr角色
     const token = req.headers.authorization.split('Bearer ')[1]
     const userInfo = await tokenService.checkToken(token)
@@ -38,6 +41,9 @@ exports.getOvertimes = async (req) => {
     let result
     if (id) whereObj.id = id
     if (auditStatus) whereObj.auditStatus = auditStatus
+    if (overtimeDate && overtimeDate.length === 2) whereObj.overtimeDate = {
+        [Op.between]: [format(overtimeDate[0]), format(overtimeDate[1])]
+    }
     if (isPrivate === "true" || !isHrmanage) whereObj.userId = userInfo.userId
 
     result = await models.Overtime.findAndCountAll({
