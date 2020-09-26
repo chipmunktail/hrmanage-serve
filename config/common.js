@@ -23,7 +23,7 @@ exports.expiredTime = 60 * 60 * 1000
 exports.secret = 'secret'
 exports.timeFormat = 'YYYY-MM-DD HH:mm:ss' // 格式换时间
 exports.rankLevel = ['A', 'B', 'C', 'D'] // performance等级
-exports.auditStatus = [1, 2, 3, 4, 5] // 审核状态 1审核中 2审核通过 3拒绝 4结束 5取消申请
+exports.auditStatus = [1, 2, 3, 4, 5] // 审核状态 1审核中 2审核通过 3驳回 4完成 5取消申请
 
 /**
  * 返回信息

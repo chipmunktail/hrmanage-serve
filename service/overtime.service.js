@@ -64,14 +64,7 @@ exports.createOvertime = async (req) => {
         return checkOvertimeLength
     }
 
-    // // 获取user freeHour
-    // const userResult = await userService.getUsers({ id: userId })
-    // const user = userResult.result.rows[0]
 
-    // // 更新user freeHour
-    // await userService.updateUser({ id: userId, freeHour: user.freeHour + sumHour }) // todo 整数sumHour
-
-    // auditStatus
 
     // 增加overtime记录
     let result
@@ -96,12 +89,23 @@ exports.deleteOvertime = async () => {
     return { status: result }
 }
 
-exports.updateOvertime = async () => {
-    const { id, name } = req
+exports.updateOvertime = async (req) => {
+    const { id, auditStatus, userId, sumHour } = req
+
+    // 更新调休时间
+    if (auditStatus === 4) {
+        // 获取user freeHour
+        const userResult = await userService.getUsers({ id: userId })
+        const user = userResult.result.rows[0]
+
+        // 更新user freeHour
+        await userService.updateUser({ id: userId, freeHour: user.freeHour + sumHour }) // todo 整数sumHour
+    }
+
     let result
-    if (id && (name)) {
+    if (id && (auditStatus)) {
         result = await models.Overtime.update({
-            name,
+            auditStatus,
         }, {
             where: { id }
         });
