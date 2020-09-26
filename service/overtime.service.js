@@ -38,7 +38,7 @@ exports.getOvertimes = async (req) => {
     let result
     if (id) whereObj.id = id
     if (auditStatus) whereObj.auditStatus = auditStatus
-    if (isPrivate || !isHrmanage) whereObj.userId = userInfo.userId
+    if (isPrivate === "true" || !isHrmanage) whereObj.userId = userInfo.userId
 
     result = await models.Overtime.findAndCountAll({
         limit,
