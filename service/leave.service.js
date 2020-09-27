@@ -43,7 +43,7 @@ const compareLeaveAndStartEnd = (sumHour, start, end) => {
 }
 
 exports.getLeaves = async (req) => {
-    const { id, leaveDate, leaveStart, leaveEnd, sumHour, userId, auditStatus, isPrivate } = req;
+    const { id, leaveDate, leaveStart, leaveEnd, sumHour, userId, auditStatus, isPrivate } = req.query;
     const { limit, offset } = limitOffset.getLimitOffset(req)
 
     const format = (time) => moment(time).format(config.timeFormat)
