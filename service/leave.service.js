@@ -76,9 +76,8 @@ exports.getLeaves = async (req) => {
 }
 
 exports.createLeave = async (req) => {
-    const { leaveDate, leaveStart, leaveEnd, sumHour, userId } = req;
-    // 查询overtime时长
-    const countOvertimeResult = await countOvertime(userId)
+    const { leaveDate, leaveStart, leaveEnd, sumHour, userId, leaveType } = req;
+
     // 判断leave时长
     const checkLeaveLength = compareLeaveAndStartEnd(sumHour, leaveStart, leaveEnd)
 
@@ -86,17 +85,25 @@ exports.createLeave = async (req) => {
     if (!checkLeaveLength.status) {
         return checkLeaveLength
     }
-    // 异常状态
-    if (!countOvertimeResult.status) {
-        return countOvertimeResult
+
+    // 调休类型
+    if (+leaveType === config.leaveTypeList[8]) {
+        // 查询overtime时长
+        const countOvertimeResult = await countOvertime(userId)
+        // 异常状态
+        if (!countOvertimeResult.status) {
+            return countOvertimeResult
+        }
+        // overtime时长小于leave时长
+        if (sumHour > countOvertimeResult.freeHour) {
+            return { status: false, message: config.message.EXCEEDSFREEHOUR }
+        }
     }
-    // overtime时长小于leave时长
-    if (sumHour > countOvertimeResult.freeHour) {
-        return { status: false, message: config.message.EXCEEDSFREEHOUR }
-    }
-    
+
+
     // 更新user freeHour
     await userService.updateUser({ id: userId, freeHour: countOvertimeResult.freeHour - sumHour }) // todo 整数sumHour
+
     // 增加leave记录
     let result
     if (leaveDate && leaveStart && leaveEnd && sumHour && userId) {

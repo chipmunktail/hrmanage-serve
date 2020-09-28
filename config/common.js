@@ -24,6 +24,7 @@ exports.secret = 'secret'
 exports.timeFormat = 'YYYY-MM-DD HH:mm:ss' // 格式换时间
 exports.rankLevel = ['A', 'B', 'C', 'D'] // performance等级
 exports.auditStatus = [1, 2, 3, 4, 5] // 审核状态 1审核中 2审核通过 3驳回 4完成 5取消申请
+exports.leaveTypeList = [1, 2, 3, 4, 5, 6, 7, 8, 9] // 1事假 2病假 3产假 4陪产假 5婚假 6哺乳假 7工伤假 8丧假 9调休
 
 /**
  * 返回信息
