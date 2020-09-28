@@ -97,7 +97,7 @@ exports.updateOvertime = async (req) => {
     const { id, auditStatus, userId, sumHour } = req
 
     // 更新调休时间
-    if (auditStatus === 4) {
+    if (+auditStatus === 4) {
         // 获取user freeHour
         const userResult = await userService.getUsers({ id: userId })
         const user = userResult.result.rows[0]

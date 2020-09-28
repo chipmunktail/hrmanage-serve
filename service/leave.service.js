@@ -76,7 +76,7 @@ exports.getLeaves = async (req) => {
 }
 
 exports.createLeave = async (req) => {
-    const { leaveDate, leaveStart, leaveEnd, sumHour, userId, leaveType } = req;
+    const { leaveDate, leaveStart, leaveEnd, sumHour, userId, remark, leaveType } = req;
 
     // 判断leave时长
     const checkLeaveLength = compareLeaveAndStartEnd(sumHour, leaveStart, leaveEnd)
@@ -101,14 +101,16 @@ exports.createLeave = async (req) => {
     }
 
 
-    // 更新user freeHour
-    await userService.updateUser({ id: userId, freeHour: countOvertimeResult.freeHour - sumHour }) // todo 整数sumHour
+    // todo 放到审核结束逻辑里
+    // // 更新user freeHour
+    // await userService.updateUser({ id: userId, freeHour: countOvertimeResult.freeHour - sumHour }) // todo 整数sumHour
 
     // 增加leave记录
     let result
     if (leaveDate && leaveStart && leaveEnd && sumHour && userId) {
         result = await models.Leave.create({
-            leaveDate, leaveStart, leaveEnd, sumHour, userId
+            leaveDate, leaveStart, leaveEnd, sumHour, userId, remark, leaveType,
+            auditStatus: 1
         })
     }
     // 返回结果
@@ -127,11 +129,21 @@ exports.deleteLeave = async (req) => {
 }
 
 exports.updateLeave = async (req) => {
-    const { id, name } = req
+    const { id, auditStatus, userId, sumHour, leaveType } = req
+
+    // 更新调休时间
+    if (+auditStatus === 4 && +leaveType === config.leaveTypeList[8]) {
+        // 查询overtime时长
+        const countOvertimeResult = await countOvertime(userId)
+        // 更新user freeHour
+        await userService.updateUser({ id: userId, freeHour: countOvertimeResult.freeHour - sumHour }) // todo 整数sumHour
+    }
+
     let result
-    if (id && (name)) {
+    if (id && (auditStatus)) {
         result = await models.Leave.update({
-            name,
+            auditStatus,
+            leaveType,
         }, {
             where: { id }
         });
