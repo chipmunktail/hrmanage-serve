@@ -38,7 +38,12 @@ module.exports = (sequelize, DataTypes) => {
     salaryId: DataTypes.INTEGER,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    enable: DataTypes.BOOLEAN
+    enable: DataTypes.BOOLEAN,
+    gender: DataTypes.INTEGER,
+    national: DataTypes.STRING,
+    birthDay: DataTypes.DATE,
+    phone: DataTypes.STRING,
+    address: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

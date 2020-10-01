@@ -18,5 +18,8 @@ router.get('/deleteUser', async (req, res, next) => {
 router.post('/updateUser', async (req, res, next) => {
   res.json(await service.updateUser(req.body))
 })
+router.get('/getUser', async (req, res, next) => {
+  res.json(await service.getUser(req))
+})
 
 module.exports = router;

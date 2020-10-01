@@ -13,9 +13,14 @@ module.exports = {
       email: 'user1@t.com',
       enable: 1,
       password: '123456',
-      createdAt:new Date(),
-      updatedAt:new Date()
-    },{
+      gender: 1,
+      national: "汉",
+      birthDay: new Date(),
+      phone: "15000000000",
+      address: "详细地址",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
       displayName: 'user2',
       name: 'user2',
       roleId: 2,
@@ -26,9 +31,14 @@ module.exports = {
       email: 'user2@t.com',
       enable: 1,
       password: '123456',
-      createdAt:new Date(),
-      updatedAt:new Date()
-    },{
+      gender: 0,
+      national: "汉",
+      birthDay: new Date(),
+      phone: "15000000001",
+      address: "详细地址1",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
       displayName: 'user3',
       name: 'user3',
       roleId: 3,
@@ -39,8 +49,13 @@ module.exports = {
       email: 'user3@t.com',
       enable: 1,
       password: '123456',
-      createdAt:new Date(),
-      updatedAt:new Date()
+      gender: 0,
+      national: "畲",
+      birthDay: new Date(),
+      phone: "15000000002",
+      address: "详细地址2",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },], {});
 
   },

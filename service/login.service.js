@@ -26,10 +26,10 @@ exports.login = async (req) => {
             const role = await (await roleService.getRoles({ id: data.roleId })).result.rows;
             // gen token
             const token = service.genToken({
-                userName: data.name,
+                userName: data.displayName,
                 userId: data.id,
                 roleName: role[0].name,
-                auth: role[0].authCode
+                auth: role[0].authCode,
             })
             // log
             logService.log({
