@@ -34,8 +34,8 @@ app.all('*', function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// 验证token有效期
-app.use(tokenService.isExpiration)
+// // 验证token有效期
+// app.use(tokenService.isExpiration)
 // 用户操作日志
 // app.use()
 
