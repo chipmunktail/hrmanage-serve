@@ -14,6 +14,9 @@ var salaryRouter = require('./routes/salaries');
 var performanceRouter = require('./routes/performance');
 var leaveRouter = require('./routes/leaves')
 var overtimeRouter = require('./routes/overtimes')
+var cardreissueRouter = require('./routes/cardreissue')
+var attendancerecordRouter = require('./routes/attendancerecord')
+var attendancecalendarRouter = require('./routes/attendancecalendar')
 
 var tokenService = require('./utils/token.service')
 
@@ -55,6 +58,9 @@ app.use('/salary', salaryRouter);
 app.use('/performance', performanceRouter);
 app.use('/leave', leaveRouter);
 app.use('/overtime', overtimeRouter);
+app.use('/cardreissue', cardreissueRouter);
+app.use('/attendancerecord', attendancerecordRouter);
+app.use('/attendancecalendar', attendancecalendarRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

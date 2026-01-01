@@ -21,7 +21,8 @@ exports.getUsers = async (req) => {
         where: whereObj,
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
         include: [
-            { model: models.Salary, attributes: ['id', 'salary', 'userId'] }
+            { model: models.Salary, attributes: ['id', 'salary', 'userId'] },
+            { model: models.Role, attributes: ['id', 'name'] },
         ]
     })
     return { status: true, result }

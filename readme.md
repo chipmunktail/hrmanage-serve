@@ -32,7 +32,29 @@ docker start container-name
 
 
 # sequelize 生成数据
+<!-- 运行所有数据文件 -->
 ./node_modules/.bin/sequelize db:seed:all
+<!-- 运行指定数据文件 -->
+npx sequelize-cli db:seed --seed 20200811072748-demo-auth.js 
+
 
 # sequelize 查看所有指令
 ./node_modules/.bin/sequelize
+
+
+
+
+npx sequelize-cli model:generate --name WeChat --attributes billCreateAt:date,describe:string,counterparty:string,product:string,receiveOrPay:string,amount:integer,payWay:string,status:string,billNo:string,merchantNo:string,remark:string,deletedAt:date
+
+<!-- 打卡记录 -->
+<!-- 上班打卡类型（0 - 正常，1 - 迟到，2 - 缺卡） -->
+<!-- 下班打卡类型（0 - 正常，1 - 早退，2 - 缺卡）	 -->
+npx sequelize-cli model:generate --name attendanceRecord --attributes recordId:integer,userId:integer,checkDate:date,checkInTime:date,checkOutTime:date,checkInType:integer,checkOutType:integer,location:string
+
+<!-- 考勤计划（日历休息日） -->、
+<!-- 日期类型（0 - 工作日，1 - 休息日，2 - 法定节假日）	 -->
+npx sequelize-cli model:generate --name attendanceCalendar --attributes calendarId:integer,calendarDate:date,dayType:integer,remark:string
+
+<!-- 补卡表 -->
+<!-- 补卡类型（0 - 上班卡，1 - 下班卡）	 -->
+npx sequelize-cli model:generate --name cardReissue --attributes reissueId:integer,userId:integer,reissueDate:date,reissueType:integer,actualTime:date,reason:string,auditStatus:integer

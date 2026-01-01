@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Department)
       User.belongsTo(models.Job)
       User.belongsTo(models.Salary)
+      User.belongsTo(models.Role)
       User.hasMany(models.Performance, {
         foreignKey: 'userId',
         sourceKey: 'id',
